@@ -1,6 +1,4 @@
-# TITLE
-
-ADD A SHORT ABSTRACT
+# Ed Sheeran’s Music Valence Analysis
 
 ## File Structure
 The repository is structured as follows:
@@ -10,5 +8,8 @@ The repository is structured as follows:
 ## Sections
 1. Introduction
 2. Data
+3. Results
+4. Discussion
 5. Appendix
 6. References
+
