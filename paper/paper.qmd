@@ -11,7 +11,10 @@ thanks: "Code and data are available at: https://github.com/timchen0326/ed_sheer
 date: today
 date-format: long
 abstract: "This paper explores the emotional trajectory of Ed Sheeran’s music by analyzing the valence, or emotional positivity, of his songs over time. Early in his career, Sheeran's music displayed a wide range of emotional tones, with significant variation in valence values. From 2015 to 2020, there is a marked increase in positivity, followed by a slight decline post-2020. These findings highlight the dynamic shifts in his music, balancing between upbeat and somber tones throughout his career."
-format: pdf
+format: 
+  pdf:
+    toc: true
+    toc-depth: 2    
 number-sections: true
 bibliography: references.bib
 ---
@@ -81,7 +84,7 @@ ed_sheeran_data %>%
 
 ```
 
-### Observations
+## Observations
 @fig-valence-over-time illustrates the evolution of Ed Sheeran's music through individual songs as data points, with the trend line providing an overview of the emotional changes over time. In his early career (pre-2015), his songs displayed a wide range of valence values, reflecting diverse emotional tones. Some tracks displayed low valence, signaling somber or negative emotions, while others were more upbeat with higher valence. This period highlights Ed Sheeran's exploration of a broad spectrum of moods, showcasing significant emotional variety in his early work.
 
 Around 2015, a noticeable upward trend emerges, reflecting a shift towards a more upbeat and consistent tone. However, after 2020, there is a slight decline in valence, suggesting a return to a more neutral emotional balance. Despite this, individual songs continue to vary widely in emotional expression, showing that Ed Sheeran's music still explores a range of moods. Overall, the valence trend stabilizes around 0.5, indicating a balance between upbeat and somber tones across his career.
