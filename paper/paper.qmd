@@ -1,66 +1,38 @@
 ---
-title: "Audio Features Analysis of Ed Sheeran's Music on Spotify"
-author: "Your Name"
-date: "2024-10-08"
+title: "Testing"
+author: 
+  - Names
+thanks: "Code and data are available at:"
+date: today
+date-format: long
+abstract: "Write something"
 format: pdf
-execute:
-  warning: false   # Suppress all warnings globally
-  message: false   # Suppress all messages globally
-  echo: false  
+number-sections: true
+bibliography: references.bib
 ---
 
 ```{r}
 #| include: false
 #| warning: false
 #| message: false
-# Install devtools if you don't have it
-# Set CRAN mirror
-options(repos = c(CRAN = "https://cloud.r-project.org"))
 
-install.packages("devtools")
-
-# Use devtools to install spotifyr from GitHub
-devtools::install_github("charlie86/spotifyr")
-
-# Load the spotifyr library
-library(spotifyr)
-
-# Install dplyr if you don't have it yet
-install.packages("dplyr")
-
-# Load the dplyr library
-library(dplyr)
-
-# Load tidyverse for other utilities
-install.packages("tidyverse")
 library(tidyverse)
-
-# Load usethis to set environment variables
+library(knitr)
 library(usethis)
+library(spotifyr)
 ```
+
+\newpage
 
 # Introduction
 
 Ed Sheeran is one of the most successful and influential contemporary artists, known for his blend of pop, folk, and acoustic music. His songs are consistently streamed by millions across platforms like Spotify. This report uses data from Spotify to analyze Ed Sheeran’s music over time, exploring key features such as track popularity, duration, and other audio characteristics like energy, danceability, and valence. These metrics provide insight into his evolving musical style and listener preferences.
 
-# Data Collection
+# Data
 
 Using the `spotifyr` package in R, data on Ed Sheeran’s tracks were collected through Spotify’s Web API. Audio features such as **popularity**, **duration**, and other key characteristics were retrieved. These features, available through Spotify’s proprietary algorithms, provide insights into how songs are perceived (e.g., popularity) and their structural properties (e.g., duration, energy, danceability).
 
 The data was saved as `ed_sheeran_data.rds` and analyzed to explore trends in Ed Sheeran's music.
-
-```{r}
-#| include: false
-usethis::edit_r_environ()
-
-```
-
-```{r}
-#| include: false
-# Authenticate with Spotify
-access_token <- get_spotify_access_token()
-
-```
 
 ```{r}
 #| include: false
