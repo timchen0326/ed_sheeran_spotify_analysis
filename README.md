@@ -2,7 +2,8 @@
 
 ## File Structure
 The repository is structured as follows:
-- `data/`: 
+- `script/`: Contain the download data R file
+- `data/`: Contains the Ed Sheeran Data file
 - `paper/`: Contains the Quarto document, references, and the final PDF of the paper.
 
 ## Sections

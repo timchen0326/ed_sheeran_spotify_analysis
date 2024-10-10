@@ -1,5 +1,6 @@
 ---
 title: "Ed Sheeran’s Music Valence Analysis"
+subtitle: "Tracking Emotional Positivity in Ed Sheeran's Music Over Time"
 author: 
   - Grace Nguyen
   - Steven Li
@@ -35,11 +36,13 @@ library(ggplot2)
 
 # Introduction
 
-The emotional qualities of music can be quantified using measures such as valence, which reflects the positivity or negativity of a song’s tone. In this paper, we analyze the valence of Ed Sheeran’s songs to trace the evolution of his music over time. By examining changes in the emotional tone of his work, we can gain insights into how his artistic expression has evolved. Early in his career, Sheeran explored a wide emotional range, producing both upbeat and melancholic tracks. However, over time, his music shows shifts in tone, particularly between 2015 and 2020, when a more positive trend emerges before settling into a more neutral balance.
+The emotional qualities of music can be quantified using measures such as valence, which reflects the positivity or negativity of a song’s tone. Valence scores are typically derived from audio features that analyze the musical composition, such as melody, harmony, rhythm, and lyrical content, using machine learning algorithms and music analysis tools like Spotify’s API or other music databases. In this paper, we analyze the valence of Ed Sheeran’s songs to trace the evolution of his music over time.
+
+By examining these changes, we can gain insights into how his artistic expression has evolved. Early in his career, Sheeran explored a wide emotional range, producing both upbeat and melancholic tracks. However, over time, his music shows shifts in tone, particularly between 2015 and 2020, when a more positive trend emerges before settling into a more neutral balance.
 
 The remainder of this paper is structured as follows. @sec-data provides a sample look at the data. @sec-results presents trends in Ed Sheeran's song valency over the years. @sec-discussion dives into the analysis of the trends.
 
-The dataset was downloaded using R [@RCoreTeam2023], and Spotify API [@spotifyr], with support using usethis [@usethis]. The dataset was also cleaned and plotted using the tidyverse [@tidyverse], knitr [@knitr], and ggplot2 [@ggplot2] packages. 
+The dataset was downloaded using R [@RCoreTeam2023], and Spotify API [@spotifyr] accessing [@spotify_api_sheeran], with support using usethis [@usethis]. The dataset was also cleaned and plotted using the tidyverse [@tidyverse], knitr [@knitr], and ggplot2 [@ggplot2] packages. 
 
 # Data {#sec-data}
 
@@ -63,7 +66,7 @@ sample_data <- ed_sheeran_data %>% sample_n(5)
 kable(sample_data)
 ```
 
-@fig-valence-distribution in the appendix @sec-appendix shows a distribution of valence (positivity) of Ed Sheeran's songs, illustrating that most songs have a valence between 0.25 and 0.75, with a peak around 0.35-0.40.
+@fig-valence-distribution in the Appendix shows a distribution of valence (positivity) of Ed Sheeran's songs, illustrating that most songs have a valence between 0.25 and 0.75, with a peak around 0.35-0.40.
 
 # Results {#sec-results}
 ## Valence of Ed Sheeran's Songs Over Time
@@ -71,16 +74,17 @@ kable(sample_data)
 ```{r}
 #| echo: false
 #| label: fig-valence-over-time
-#| fig-cap: "Valence (Positivity) of Ed Sheeran's Songs Over Time"
+#| fig-cap: "Valence (Positivity) of Ed Sheeran's Songs Over Time (Year)"
 #| warning: false
 ed_sheeran_data %>%
   mutate(album_release_date = as.Date(album_release_date)) %>%
   ggplot(aes(x = album_release_date, y = valence)) +
-  geom_point() +
-  geom_smooth(method = "loess", color = "green") +
+  geom_point(alpha = 0.6) + 
+  geom_smooth(method = "loess", color = "green", alpha = 0.4) +
   labs(x = "Album Release Date",
        y = "Valence (Positivity)") +
   theme_minimal()
+
 
 ```
 
@@ -96,7 +100,10 @@ These trends suggest that Ed Sheeran's artistic evolution has involved experimen
 
 \newpage
 
-# Appendix {#sec-appendix}
+\appendix
+
+# Appendix {-}
+
 ```{r}
 #| echo: false
 #| label: fig-valence-distribution
@@ -104,10 +111,12 @@ These trends suggest that Ed Sheeran's artistic evolution has involved experimen
 #| warning: false
 ed_sheeran_data %>%
   ggplot(aes(x = valence)) +
-  geom_histogram(binwidth = 0.05, fill = "lightblue", color = "black") +
+  geom_histogram(binwidth = 0.05, fill = "grey", color = "black") +
   labs(x = "Valence (Positivity)", 
        y = "Frequency") +
-  theme_minimal()
+  theme_minimal() +
+  theme(text = element_text(size = 12))  # Consistent font size
+
 
 ```
 
