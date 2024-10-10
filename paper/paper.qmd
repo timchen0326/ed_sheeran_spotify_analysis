@@ -20,6 +20,7 @@ library(tidyverse)
 library(knitr)
 library(usethis)
 library(spotifyr)
+library(ggplot2)
 ```
 
 \newpage
@@ -28,45 +29,33 @@ library(spotifyr)
 
 Ed Sheeran is one of the most successful and influential contemporary artists, known for his blend of pop, folk, and acoustic music. His songs are consistently streamed by millions across platforms like Spotify. This report uses data from Spotify to analyze Ed Sheeran’s music over time, exploring key features such as track popularity, duration, and other audio characteristics like energy, danceability, and valence. These metrics provide insight into his evolving musical style and listener preferences.
 
-# Data
+The remainder of this paper is structured as follows. @sec-data provides a sample look at the data and the data cleaning methodology. @sec-results presents trends in Ed Sheeran's song valency over the years. @sec-discussion dives into the analysis of the trends.
 
-Using the `spotifyr` package in R, data on Ed Sheeran’s tracks were collected through Spotify’s Web API. Audio features such as **popularity**, **duration**, and other key characteristics were retrieved. These features, available through Spotify’s proprietary algorithms, provide insights into how songs are perceived (e.g., popularity) and their structural properties (e.g., duration, energy, danceability).
+The dataset was downloaded using R [@RCoreTeam2023], and spotify API [@spotifyr], with support using usethis [@usethis]. The dataset was also cleaned and plotted using the tidyverse [@tidyverse], knitr [@knitr], and ggplot2 [@ggplot2] packages. 
 
-The data was saved as `ed_sheeran_data.rds` and analyzed to explore trends in Ed Sheeran's music.
+# Data {#sec-data}
 
+@tbl-sample is a sample of the downloaded data from @spotifyr, and the columns needed for our analysis.
 ```{r}
-#| include: false
+#| label: tbl-sample
+#| tbl-cap: "Sample Data"
+#| echo: false
+#| warning: false
+#| message: false
+
+set.seed(123)
+
 ed_sheeran_data <- get_artist_audio_features("ed sheeran")
 
-saveRDS(ed_sheeran_data, "ed_sheeran_data.rds")
-ed_sheeran_data <- readRDS("ed_sheeran_data.rds")
+ed_sheeran_data <- ed_sheeran_data %>% 
+  select("album_release_date", "valence")
 
-# Inspect the structure of the data
-str(ed_sheeran_data)
+sample_data <- ed_sheeran_data %>% sample_n(5)
 
+kable(sample_data)
 ```
 
-# Analysis and Findings
-
-## Song Duration Trends Next, we explore the average duration of Ed Sheeran's songs. Has he tended to produce longer or shorter tracks over time?
-
-```{r}
-#| echo: false
-#| label: fig-song-duration
-#| fig-cap: "Song Duration Over Time for Ed Sheeran"
-library(ggplot2)
-library(dplyr)
-
-ed_sheeran_data %>%
-  mutate(album_release_date = as.Date(album_release_date)) %>%
-  ggplot(aes(x = album_release_date, y = duration_ms)) +
-  geom_point() +
-  labs(x = "Album Release Date", y = "Duration (ms)") +
-  theme_minimal()
-
-```
-
-The graph indicates that Ed Sheeran's song durations have remained relatively stable, with most songs ranging between 180,000 and 240,000 milliseconds (around 3 to 4 minutes). While there are a few longer songs, the trend line shows no significant increase or decrease in song length over time.
+# Results
 
 ## Valence of Ed Sheeran's Songs Over Time
 Valence describes the musical positivity of a track, with higher values indicating happier or more positive songs. In this analysis, we explore how Ed Sheeran’s songs have varied in valence over the course of his career.
@@ -88,23 +77,10 @@ ed_sheeran_data %>%
 
 As we can see, albums such as No.6 Collaborations Project have higher average danceability, reflecting Ed Sheeran's collaborations with artists known for more upbeat tracks.
 
-# Conclusion
+# Discussion
 This analysis highlights several interesting trends in Ed Sheeran’s music. His song popularity shows spikes around major album releases, and while the duration of his songs remains consistent, the energy, danceability, and valence of his music shift across different albums. These insights reveal the versatility in Ed Sheeran's music style, adapting to different musical influences while maintaining a consistent appeal to his audience.
 
 # Appendix
-```{r}
-#| echo: false
-#| label: fig-danceability-distribution
-#| fig-cap: "Distribution of Danceability in Ed Sheeran's Songs"
-# Plot the distribution of danceability
-ggplot(ed_sheeran_data, aes(x = danceability)) +
-  geom_histogram(bins = 20, fill = "lightblue", color = "black") +
-  labs(title = "Distribution of Danceability in Ed Sheeran's Songs",
-       x = "Danceability",
-       y = "Count") +
-  theme_minimal()
-
-```
 
 \newpage
 
