@@ -12,4 +12,3 @@ The repository is structured as follows:
 4. Discussion
 5. Appendix
 6. References
-
