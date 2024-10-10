@@ -1,11 +1,16 @@
 ---
-title: "Testing"
+title: "Ed Sheeran’s Music Valence Analysis"
 author: 
-  - Names
-thanks: "Code and data are available at:"
+  - Grace Nguyen
+  - Steven Li
+  - Tim Chen
+  - Fangning Zhang
+  - Tommy Fu
+  - Xinxiang Gao
+thanks: "Code and data are available at: https://github.com/timchen0326/ed_sheeran_spotify_analysis"
 date: today
 date-format: long
-abstract: "Write something"
+abstract: "This paper explores the emotional trajectory of Ed Sheeran’s music by analyzing the valence, or emotional positivity, of his songs over time. Early in his career, Sheeran's music displayed a wide range of emotional tones, with significant variation in valence values. From 2015 to 2020, there is a marked increase in positivity, followed by a slight decline post-2020. These findings highlight the dynamic shifts in his music, balancing between upbeat and somber tones throughout his career."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -27,15 +32,15 @@ library(ggplot2)
 
 # Introduction
 
-Ed Sheeran is one of the most successful and influential contemporary artists, known for his blend of pop, folk, and acoustic music. His songs are consistently streamed by millions across platforms like Spotify. This report uses data from Spotify to analyze Ed Sheeran’s music over time, exploring key features such as track popularity, duration, and other audio characteristics like energy, danceability, and valence. These metrics provide insight into his evolving musical style and listener preferences.
+The emotional qualities of music can be quantified using measures such as valence, which reflects the positivity or negativity of a song’s tone. In this paper, we analyze the valence of Ed Sheeran’s songs to trace the evolution of his music over time. By examining changes in the emotional tone of his work, we can gain insights into how his artistic expression has evolved. Early in his career, Sheeran explored a wide emotional range, producing both upbeat and melancholic tracks. However, over time, his music shows shifts in tone, particularly between 2015 and 2020, when a more positive trend emerges before settling into a more neutral balance.
 
-The remainder of this paper is structured as follows. @sec-data provides a sample look at the data and the data cleaning methodology. @sec-results presents trends in Ed Sheeran's song valency over the years. @sec-discussion dives into the analysis of the trends.
+The remainder of this paper is structured as follows. @sec-data provides a sample look at the data. @sec-results presents trends in Ed Sheeran's song valency over the years. @sec-discussion dives into the analysis of the trends.
 
-The dataset was downloaded using R [@RCoreTeam2023], and spotify API [@spotifyr], with support using usethis [@usethis]. The dataset was also cleaned and plotted using the tidyverse [@tidyverse], knitr [@knitr], and ggplot2 [@ggplot2] packages. 
+The dataset was downloaded using R [@RCoreTeam2023], and Spotify API [@spotifyr], with support using usethis [@usethis]. The dataset was also cleaned and plotted using the tidyverse [@tidyverse], knitr [@knitr], and ggplot2 [@ggplot2] packages. 
 
 # Data {#sec-data}
 
-@tbl-sample is a sample of the downloaded data from @spotifyr, and the columns needed for our analysis.
+@tbl-sample is a sample of the downloaded data from Spotify [@spotifyr], and the columns needed for our analysis.
 ```{r}
 #| label: tbl-sample
 #| tbl-cap: "Sample Data"
@@ -55,32 +60,53 @@ sample_data <- ed_sheeran_data %>% sample_n(5)
 kable(sample_data)
 ```
 
-# Results
+@fig-valence-distribution in the appendix @sec-appendix shows a distribution of valence (positivity) of Ed Sheeran's songs, illustrating that most songs have a valence between 0.25 and 0.75, with a peak around 0.35-0.40.
 
+# Results {#sec-results}
 ## Valence of Ed Sheeran's Songs Over Time
-Valence describes the musical positivity of a track, with higher values indicating happier or more positive songs. In this analysis, we explore how Ed Sheeran’s songs have varied in valence over the course of his career.
+@fig-valence-over-time represents the valence, or emotional positivity, of Ed Sheeran's songs across his career, as measured over time based on album release dates. Valence is a measure of the musical tone of a song, where higher values indicate more positive emotions and lower values represent more negative or somber tones.
 ```{r}
 #| echo: false
 #| label: fig-valence-over-time
 #| fig-cap: "Valence (Positivity) of Ed Sheeran's Songs Over Time"
+#| warning: false
 ed_sheeran_data %>%
   mutate(album_release_date = as.Date(album_release_date)) %>%
   ggplot(aes(x = album_release_date, y = valence)) +
   geom_point() +
   geom_smooth(method = "loess", color = "green") +
-  labs(title = "Valence (Positivity) of Ed Sheeran's Songs Over Time",
-       x = "Album Release Date",
+  labs(x = "Album Release Date",
        y = "Valence (Positivity)") +
   theme_minimal()
 
 ```
 
-As we can see, albums such as No.6 Collaborations Project have higher average danceability, reflecting Ed Sheeran's collaborations with artists known for more upbeat tracks.
+### Observations
+@fig-valence-over-time illustrates the evolution of Ed Sheeran's music through individual songs as data points, with the trend line providing an overview of the emotional changes over time. In his early career (pre-2015), his songs displayed a wide range of valence values, reflecting diverse emotional tones. Some tracks displayed low valence, signaling somber or negative emotions, while others were more upbeat with higher valence. This period highlights Ed Sheeran's exploration of a broad spectrum of moods, showcasing significant emotional variety in his early work.
 
-# Discussion
-This analysis highlights several interesting trends in Ed Sheeran’s music. His song popularity shows spikes around major album releases, and while the duration of his songs remains consistent, the energy, danceability, and valence of his music shift across different albums. These insights reveal the versatility in Ed Sheeran's music style, adapting to different musical influences while maintaining a consistent appeal to his audience.
+Around 2015, a noticeable upward trend emerges, reflecting a shift towards a more upbeat and consistent tone. However, after 2020, there is a slight decline in valence, suggesting a return to a more neutral emotional balance. Despite this, individual songs continue to vary widely in emotional expression, showing that Ed Sheeran's music still explores a range of moods. Overall, the valence trend stabilizes around 0.5, indicating a balance between upbeat and somber tones across his career.
 
-# Appendix
+# Discussion {#sec-discussion}
+This analysis of Ed Sheeran’s music over time reveals several key trends. Early in his career, Sheeran’s songs showcased a wide emotional range. Between 2015 and 2020, his music became more positive overall, reflecting a shift towards optimism during that period. However, after 2020, there is evidence of a slight return to more neutral emotional tones, with less focus on purely positive content.
+
+These trends suggest that Ed Sheeran's artistic evolution has involved experimenting with a range of emotions, while maintaining a generally consistent balance between positive and negative tones. The fluctuations in the graph highlight his versatility in conveying both joy and melancholy in his work.
+
+\newpage
+
+# Appendix {#sec-appendix}
+```{r}
+#| echo: false
+#| label: fig-valence-distribution
+#| fig-cap: "Distribution of Valence in Ed Sheeran's Songs"
+#| warning: false
+ed_sheeran_data %>%
+  ggplot(aes(x = valence)) +
+  geom_histogram(binwidth = 0.05, fill = "lightblue", color = "black") +
+  labs(x = "Valence (Positivity)", 
+       y = "Frequency") +
+  theme_minimal()
+
+```
 
 \newpage
 
