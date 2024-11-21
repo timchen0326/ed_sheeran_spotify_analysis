@@ -18,4 +18,4 @@ The repository is structured as follows:
 
 ## Statement on LLM Usage
 
-All aspects of the code and text that involved language model assistance were written using ChatGPT-4o. This includes enhancing clarity, drafting text, and refining code. All interactions with ChatGPT-4o are documented for reproducibility.
+All aspects of the code and text that involved language model assistance were written using ChatGPT-4o. This includes enhancing clarity, drafting text, and refining code. All interactions with ChatGPT-4o are documented for reproducibility and full transparancy in `other/llm` folder.
