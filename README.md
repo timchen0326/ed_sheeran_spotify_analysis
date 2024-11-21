@@ -1,6 +1,3 @@
-
-markdown
-Copy code
 # Ed Sheeran’s Music Valence Analysis
 
 ## Overview
